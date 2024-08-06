@@ -1,0 +1,12 @@
+[INFO ] 2024-08-06 12:52:58.130 [MainController.main()] Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+[WARN ] 2024-08-06 12:52:58.303 [MainController.main()] deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[INFO ] 2024-08-06 12:52:58.491 [MainController.main()] Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[WARN ] 2024-08-06 12:52:58.601 [MainController.main()] pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[INFO ] 2024-08-06 12:52:58.617 [MainController.main()] pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/EmployeeManage]
+[INFO ] 2024-08-06 12:52:58.617 [MainController.main()] pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[INFO ] 2024-08-06 12:52:58.617 [MainController.main()] pooling - HHH10001003: Autocommit mode: false
+[INFO ] 2024-08-06 12:52:58.617 [MainController.main()] DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[INFO ] 2024-08-06 12:52:58.853 [MainController.main()] Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[INFO ] 2024-08-06 12:52:59.528 [MainController.main()] access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@672743b5] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[INFO ] 2024-08-06 12:52:59.622 [MainController.main()] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 2024-08-06 12:53:05.860 [MainController.main()] CourseController - Course deleted successfully.
