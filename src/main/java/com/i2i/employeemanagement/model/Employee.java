@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -50,6 +52,10 @@ public class Employee {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "laptop_id")
+    private Laptop laptop;
+
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
@@ -65,11 +71,12 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String dob, int experience, String place, Department department) {
+    public Employee(String name, String dob, int experience, String place, Laptop laptop,Department department) {
         this.name = name;
         this.dob = dob;
         this.experience = experience;
         this.place = place;
+        this.laptop = laptop;
         this.department = department;
         this.isDeleted = false;
     }
@@ -116,6 +123,14 @@ public class Employee {
 
     public boolean getIsDeleted() {
         return isDeleted;
+    }
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void setLaptop(Laptop laptop) {
+        this.laptop = laptop;
     }
 
     public void setIsDeleted(boolean isDeleted) {

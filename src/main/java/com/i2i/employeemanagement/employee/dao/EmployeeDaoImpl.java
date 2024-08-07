@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.i2i.employeemanagement.model.Laptop;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -23,13 +24,13 @@ import com.i2i.employeemanagement.model.Employee;
 public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
-    public int addEmployee(String name, String dob, int experience, String place, Department department) throws EmployeeException {
+    public int addEmployee(String name, String dob, int experience, String place, Laptop laptop, Department department) throws EmployeeException {
         Session session = null;
         Transaction transaction = null;
         try {
             session = SessionProvider.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Employee employee = new Employee(name, dob, experience, place, department);
+            Employee employee = new Employee(name, dob, experience, place,laptop, department);
             session.save(employee);
             transaction.commit();
             return employee.getId(); 

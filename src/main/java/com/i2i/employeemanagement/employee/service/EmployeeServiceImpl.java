@@ -9,9 +9,12 @@ import com.i2i.employeemanagement.department.service.DepartmentServiceImpl;
 import com.i2i.employeemanagement.exception.EmployeeException;
 import com.i2i.employeemanagement.employee.dao.EmployeeDaoImpl;
 import com.i2i.employeemanagement.employee.dao.EmployeeDao;
+import com.i2i.employeemanagement.laptop.service.LaptopService;
+import com.i2i.employeemanagement.laptop.service.LaptopServiceImpl;
 import com.i2i.employeemanagement.model.Course;
 import com.i2i.employeemanagement.model.Department;
 import com.i2i.employeemanagement.model.Employee;
+import com.i2i.employeemanagement.model.Laptop;
 
 
 /**
@@ -22,10 +25,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDao employeeDao = new EmployeeDaoImpl();
     private DepartmentService departmentService = new DepartmentServiceImpl();
     private CourseService courseService = new CourseServiceImpl();
+    private LaptopService laptopService = new LaptopServiceImpl();
 
     @Override
-    public int addEmployee(String name, String dob, int experience, String place, Department department) throws EmployeeException {
-        return employeeDao.addEmployee(name, dob, experience, place, department);
+    public int addEmployee(String name, String dob, int experience, String place, Laptop laptop, Department department) throws EmployeeException {
+        return employeeDao.addEmployee(name, dob, experience, place, laptop,department);
     }
 
     @Override
@@ -76,5 +80,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void assignCourseToEmployee(int employeeId, int courseId) throws EmployeeException {
         employeeDao.assignCourseToEmployee(employeeId, courseId);
+    }
+
+    @Override
+    public void updateLaptop(int updateId,Laptop laptop) throws EmployeeException {
+         laptopService.updateLaptop(updateId,laptop);
     }
 }

@@ -1,5 +1,6 @@
 package com.i2i.employeemanagement.employee.controller;
 
+import com.i2i.employeemanagement.model.Laptop;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -112,6 +113,13 @@ public class EmployeeController {
             System.out.println("Enter Place: ");
             place = scanner.nextLine();
         } while (validation.stringValidator(place));
+
+        String laptopName;
+        do {
+            System.out.println("Enter Laptop: ");
+            laptopName = scanner.nextLine();
+        } while (validation.stringValidator(laptopName));
+        Laptop laptop = new Laptop(laptopName);
         Department department = assignDepartment();
 
         /**
@@ -119,7 +127,7 @@ public class EmployeeController {
          *generated in the database for assigning the course for the emoployee
          */
         int employeeId = employeeService.addEmployee(name, dob, 
-                         experience, place, department);
+                         experience, place,laptop, department);
         boolean addCourse = true;
         while (addCourse) {
             int courseId = assignCourse();
@@ -130,7 +138,7 @@ public class EmployeeController {
             }
         }
     }
-       
+
     /**
      * This Method is to delete employees in the database.
      *  
@@ -170,8 +178,8 @@ public class EmployeeController {
 
             if (employee != null) {
                 System.out.println("Choose the update Field : 1-Name  2-Dob"
-                                   + "3-Experience  4-Department"
-                                   + "5-Place  6-Courses");
+                                   + "3-Experience  4-Laptop 5-Department"
+                                   + "6-Place  7-Courses");
                 int updateField = scanner.nextInt();
                 scanner.nextLine();
 
@@ -211,12 +219,22 @@ public class EmployeeController {
                         break;
 
                     case 4:
+                        String laptopUpdatedName;
+                        do {
+                            System.out.println("Enter the Updated Laptop: ");
+                            laptopUpdatedName = scanner.nextLine();
+                        } while (validation.stringValidator(laptopUpdatedName));
+                        Laptop laptop = new Laptop(laptopUpdatedName);
+                        employeeService.updateLaptop(updateId,laptop);
+                        break;
+
+                    case 5:
                         System.out.println("Enter the Updated Department: ");
                         Department updatedDepartment = assignDepartment();
                         employee.setDepartment(updatedDepartment);
                         break;
 
-                    case 5:
+                    case 6:
                         String updatedPlace;
                         do {
                             System.out.println("Enter Place: ");
@@ -225,7 +243,7 @@ public class EmployeeController {
                         employee.setPlace(updatedPlace);
                         break;
 
-                    case 6:
+                    case 7:
                         boolean updateCourse = true;
                         while (updateCourse) {
                             int updatedCourseId = assignCourse();
@@ -288,12 +306,13 @@ public class EmployeeController {
         int employeeId = scanner.nextInt();
         Employee employee = employeeService.getEmployeeById(employeeId);
         System.out.println("--------------------------------------"
-                           + "-------------------------------------"
-                            + "----------------------------------------------");
+                           + "------------------------------------"
+                           + "----------------------------------"
+                            + "-------------------------------");
         String employeeFormat = "| %-10s | %-15s | %-15s | %-15s | %-15s | "
-                                + "%-15s | %-15s |\n";
+                                + "%-15s | %-15s |%-15s |\n";
         System.out.format(employeeFormat, "ID", "Name", "Age", "Experience", 
-                          "Place", "Department","Course");
+                          "Place", "Laptop", "Department","Course");
         StringBuilder courseList = new StringBuilder();
                 for(Course course : employee.getCourses()){
                     courseList.append(course.getCourseName()).append(", ");
@@ -302,11 +321,13 @@ public class EmployeeController {
         System.out.format(employeeFormat, employee.getId(),
                             employee.getName(), employee.getAge(),
                             employee.getExperience(), employee.getPlace(),
+                            employee.getLaptop().getLaptopName(),
                             employee.getDepartment().getDepartmentName(),
                             course); 
         System.out.println("--------------------------------------"
-                           + "-------------------------------------"
-                            + "----------------------------------------------");           
+                           + "------------------------------------"
+                           + "---------------------------------"
+                            + "--------------------------------");
         
     }
 
@@ -317,11 +338,12 @@ public class EmployeeController {
     
         Map<Integer, Employee> employees = employeeService.getAllEmployees();
         System.out.println("--------------------------------------"
-                           + "-------------------------------------"
-                            + "----------------------------------------------");
-        String employeeFormat = "| %-10s | %-15s | %-15s | %-15s | %-15s | %-15s |%-15s |\n";
+                           + "------------------------------------"
+                           + "-----------------------------------"
+                           + "-------------------------------");
+        String employeeFormat = "| %-10s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n";
         System.out.format(employeeFormat, "ID", "Name", "Age", "Experience",
-                          "Place", "Department","Courses");
+                          "Place","Laptop","Department","Courses");
  
         if (employees.isEmpty()) {
             logger.info("No Employee Details to Display");
@@ -335,13 +357,15 @@ public class EmployeeController {
                 System.out.format(employeeFormat, employee.getId(),
                             employee.getName(), employee.getAge(),
                             employee.getExperience(), employee.getPlace(),
+                            employee.getLaptop().getLaptopName(),
                             employee.getDepartment().getDepartmentName(),
                             course);                    
                 
             }
-            System.out.println("---------------------------------------"
-                               + "--------------------------------------"
-                               + "--------------------------------------------");
+            System.out.println("--------------------------------------"
+                               + "-------------------------------------"
+                               + "----------------------------------"
+                               + "-------------------------------");
         }
     }
 

@@ -8,6 +8,7 @@ import com.i2i.employeemanagement.exception.EmployeeException;
 import com.i2i.employeemanagement.model.Course;
 import com.i2i.employeemanagement.model.Department;
 import com.i2i.employeemanagement.model.Employee;
+import com.i2i.employeemanagement.model.Laptop;
 
 /**
  * This class provides methods to interact with the database for employee-related operations.
@@ -24,7 +25,7 @@ public interface EmployeeDao {
      * @param place The place of the employee to be added.
      * @param department The department of the employee to be added.
      */
-    int addEmployee(String name, String dob, int experience, String place, Department department) throws EmployeeException;
+    int addEmployee(String name, String dob, int experience, String place, Laptop laptop,Department department) throws EmployeeException;
 
     /**
      * Retrieves all employees from the database.
