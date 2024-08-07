@@ -29,7 +29,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourseById(int courseId) throws EmployeeException {
-        return courseDao.getAllCourses().get(courseId);
+        return courseDao.getCourseById(courseId);
     }
 
     @Override

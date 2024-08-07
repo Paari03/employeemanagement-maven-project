@@ -105,6 +105,23 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public Course getCourseById(int courseId) throws EmployeeException {
+        Session session = null;
+        try {
+            session = SessionProvider.getSessionFactory().openSession();
+            Course course = session.get(Course.class, courseId);
+            return course;
+        } catch (Exception e) {
+            throw new EmployeeException("Error in retrieving all Courses. Cause: " + e.getMessage(), e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+
+    @Override
     public Map<Integer, Employee> getEmployeesByCourse(int courseId) throws EmployeeException {
         Session session = null;
         Map<Integer, Employee> employees = new HashMap<>();
@@ -118,7 +135,7 @@ public class CourseDaoImpl implements CourseDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EmployeeException("Error in retrieving Employees by Course Id", e);
+            throw new EmployeeException("Error in retrieving Employees by Course Id" + courseId , e);
         } finally {
             if (session != null) {
                 session.close();

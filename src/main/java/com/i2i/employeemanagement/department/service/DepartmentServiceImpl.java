@@ -37,7 +37,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentById(int departmentId) throws EmployeeException {
-        return getAllDepartments().get(departmentId);
+        return departmentDao.getDepartmentById(departmentId);
     }
 
     @Override

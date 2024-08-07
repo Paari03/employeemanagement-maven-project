@@ -45,6 +45,13 @@ public interface DepartmentDao {
     Map<Integer, Department> getAllDepartments() throws EmployeeException; 
 
     /**
+     * This Method will get the Department by Id.
+     * @return Department
+     *     It contains the id and name of the department.
+     */
+    Department getDepartmentById(int departmentId) throws EmployeeException;
+
+    /**
      * This Method will get employee by Department in the database;
      * @return Map<Integer, Employee>
      *     id as a integer and the employee contails all the detaails

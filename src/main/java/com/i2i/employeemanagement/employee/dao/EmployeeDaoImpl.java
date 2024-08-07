@@ -68,6 +68,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
+    public Employee getEmployeeById(int id) throws EmployeeException {
+        Session session = null;
+        try {
+            session = SessionProvider.getSessionFactory().openSession();
+            Employee employee = session.get(Employee.class, id);
+            return employee;
+        } catch (Exception e) {
+            throw new EmployeeException("Error retrieving employees", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
     public boolean deleteEmployee(int deleteId) throws EmployeeException {
         Session session = null;
         Transaction transaction = null;
@@ -93,6 +109,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
         }
     }
+
+
 
     @Override
     public void updateEmployee(int updateId, Employee employee) throws EmployeeException {

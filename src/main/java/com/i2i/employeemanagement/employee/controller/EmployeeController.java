@@ -33,26 +33,37 @@ public class EmployeeController {
                     + "1-Add an Employee\t"
                     + "2-Delete an Employee\t"
                     + "3-Update an Employee\t"
-                    + "4-Display all Employees\t"
-                    + "5-Exit");
+                    + "4-Display one Employee\t"
+                    + "5-Display all Employees\t"
+                    + "6-Exit");
             int option = scanner.nextInt();
             try {
                 switch (option) {
                     case 1:
                         addEmployee();
                         break;
+
                     case 2:
                         deleteEmployee();
                         break;
+
                     case 3:
                         updateEmployee();
                         break;
+
+
                     case 4:
+                        displayOneEmployee();
+                        break;
+
+                    case 5:
                         displayAllEmployees();
                         break;
-                    case 5:
+
+                    case 6:
                         isTrue = false;
                         break;
+
                     default:
                         System.out.println("Invalid Choice");
                         break;
@@ -155,7 +166,7 @@ public class EmployeeController {
             System.out.println("Enter the ID of the Employee you want to update: ");
             int updateId = scanner.nextInt();
             scanner.nextLine();
-            Employee employee = employeeService.getEmployee(updateId);
+            Employee employee = employeeService.getEmployeeById(updateId);
 
             if (employee != null) {
                 System.out.println("Choose the update Field : 1-Name  2-Dob"
@@ -269,6 +280,37 @@ public class EmployeeController {
     }
 
     /**
+     * This method will display one employee the Database.
+     * According to the id given by the user.
+     */
+    public void displayOneEmployee() throws EmployeeException {
+        System.out.println("Enter the id of the employee to be displayed");
+        int employeeId = scanner.nextInt();
+        Employee employee = employeeService.getEmployeeById(employeeId);
+        System.out.println("--------------------------------------"
+                           + "-------------------------------------"
+                            + "----------------------------------------------");
+        String employeeFormat = "| %-10s | %-15s | %-15s | %-15s | %-15s | "
+                                + "%-15s | %-15s |\n";
+        System.out.format(employeeFormat, "ID", "Name", "Age", "Experience", 
+                          "Place", "Department","Course");
+        StringBuilder courseList = new StringBuilder();
+                for(Course course : employee.getCourses()){
+                    courseList.append(course.getCourseName()).append(", ");
+                }
+        String course = courseList.toString();                   
+        System.out.format(employeeFormat, employee.getId(),
+                            employee.getName(), employee.getAge(),
+                            employee.getExperience(), employee.getPlace(),
+                            employee.getDepartment().getDepartmentName(),
+                            course); 
+        System.out.println("--------------------------------------"
+                           + "-------------------------------------"
+                            + "----------------------------------------------");           
+        
+    }
+
+    /**
      * This Method is to display all the employee details.
      */
     public void displayAllEmployees() throws EmployeeException {
@@ -278,7 +320,8 @@ public class EmployeeController {
                            + "-------------------------------------"
                             + "----------------------------------------------");
         String employeeFormat = "| %-10s | %-15s | %-15s | %-15s | %-15s | %-15s |%-15s |\n";
-        System.out.format(employeeFormat, "ID", "Name", "Age", "Experience", "Place", "Department","Courses");
+        System.out.format(employeeFormat, "ID", "Name", "Age", "Experience",
+                          "Place", "Department","Courses");
  
         if (employees.isEmpty()) {
             logger.info("No Employee Details to Display");

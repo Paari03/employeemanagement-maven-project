@@ -46,6 +46,13 @@ public interface CourseDao {
      *     The course Id as the key and the Course object as the value 
      */
     Map<Integer, Course> getAllCourses() throws EmployeeException; 
+    
+    /**
+     * Retrieve the single course from the course.
+     * @return Course
+     *     It contains the course Id and Name.
+     */
+    Course getCourseById(int courseId) throws EmployeeException;
 
     /**
      * Retrieves  all Employees in a specific course.

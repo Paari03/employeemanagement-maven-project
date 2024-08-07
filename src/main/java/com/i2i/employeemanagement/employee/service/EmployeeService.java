@@ -80,7 +80,7 @@ public interface EmployeeService {
      * @return Employee
      *     The employee object to the given id.
      */
-    Employee getEmployee(int id) throws EmployeeException;
+    Employee getEmployeeById(int id) throws EmployeeException;
 
     /**
      * Retrieves all departments available in the storage.

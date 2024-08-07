@@ -34,6 +34,14 @@ public interface EmployeeDao {
     Map<Integer, Employee> getAllEmployees() throws EmployeeException;
 
     /**
+     * Retrieve a employee from the database.
+     *
+     * @return Employee
+     *     A employee containing employee details.
+     */
+    Employee getEmployeeById(int id) throws EmployeeException;
+
+    /**
      * Deletes an employee from the database based on the given ID.
      *
      * @param id The ID of the employee to delete.

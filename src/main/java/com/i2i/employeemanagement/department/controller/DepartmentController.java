@@ -98,7 +98,7 @@ public class DepartmentController {
                 }
             }
         } else {
-            logger.info("No departments available.");
+            logger.error("No departments available.");
         }
     }
 
@@ -119,7 +119,7 @@ public class DepartmentController {
             departmentService.updateDepartment(departmentId, department);
             logger.info("Department updated successfully.");
         } else {
-            logger.info("Department ID not found. Please try again.");
+            logger.error("Department ID not found. Please try again.");
         }
     }
 
@@ -136,6 +136,8 @@ public class DepartmentController {
             scanner.nextLine();
             if(departmentService.deleteDepartment(departmentId)) {
                 logger.info("Department deleted successfully.");
+            } else {
+                logger.error("Department Id not found");
             }
         }
     }

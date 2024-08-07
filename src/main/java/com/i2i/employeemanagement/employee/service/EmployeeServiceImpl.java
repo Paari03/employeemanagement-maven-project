@@ -49,8 +49,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(int id) throws EmployeeException {
-        return employeeDao.getAllEmployees().get(id);
+    public Employee getEmployeeById(int id) throws EmployeeException {
+        return employeeDao.getEmployeeById(id);
     }
 
     @Override

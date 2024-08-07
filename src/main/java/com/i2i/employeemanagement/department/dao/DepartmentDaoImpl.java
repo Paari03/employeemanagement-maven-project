@@ -28,7 +28,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new EmployeeException("Error adding the Department Name: " + departmentName, e);
+            throw new EmployeeException("Error in adding the Department Name: " + departmentName, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -54,6 +54,22 @@ public class DepartmentDaoImpl implements DepartmentDao {
             }
         }
         return departments;
+    }
+
+    @Override
+    public Department getDepartmentById(int departmentId) throws EmployeeException{
+        Session session = null;
+        try {
+            session = SessionProvider.getSessionFactory().openSession();
+            Department department = session.get(Department.class, departmentId);
+            return department;
+        } catch (Exception e) {
+            throw new EmployeeException("Error retrieving all departments:", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     @Override
@@ -91,6 +107,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 transaction.commit();
                 return true;
             }
+            return false;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -101,7 +118,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 session.close();
             }
         }
-        return false;
     }
 
     @Override
