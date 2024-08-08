@@ -1,6 +1,7 @@
 package com.i2i.employeemanagement.employee.controller;
 
-import com.i2i.employeemanagement.model.Laptop;
+
+import com.i2i.employeemanagement.employee.service.EmployeeService;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -8,7 +9,11 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.Map;
 
-import com.i2i.employeemanagement.employee.service.EmployeeService;
+import com.i2i.employeemanagement.course.service.CourseService;
+import com.i2i.employeemanagement.course.service.CourseServiceImpl;
+import com.i2i.employeemanagement.department.service.DepartmentService;
+import com.i2i.employeemanagement.department.service.DepartmentServiceImpl;
+import com.i2i.employeemanagement.model.Laptop;
 import com.i2i.employeemanagement.employee.service.EmployeeServiceImpl;
 import com.i2i.employeemanagement.model.Employee;
 import com.i2i.employeemanagement.model.Course;
@@ -22,10 +27,12 @@ import com.i2i.employeemanagement.exception.EmployeeException;
  */
 public class EmployeeController {
 
-    private EmployeeService employeeService = new EmployeeServiceImpl();
-    private EmployeeValidator validation = new EmployeeValidator();
-    private static Logger logger = LogManager.getLogger();
-    private Scanner scanner = new Scanner(System.in);
+    private final EmployeeService employeeService = new EmployeeServiceImpl();
+    private final EmployeeValidator validation = new EmployeeValidator();
+    DepartmentService departmentService = new DepartmentServiceImpl();
+    CourseService courseService = new CourseServiceImpl();
+    private static final Logger logger = LogManager.getLogger();
+    private final Scanner scanner = new Scanner(System.in);
 
     public void employeeFunction() {
         boolean isTrue = true;
@@ -95,8 +102,7 @@ public class EmployeeController {
                 dob = scanner.nextLine();
                 correctDob = validation.dobValidator(dob);
             } catch (DateTimeParseException e) {
-                logger.error(" Please enter a valid date of birth" 
-                                   + e.getMessage());
+                logger.error(" Please enter a valid date of birth{}", e.getMessage());
                 correctDob = false;
             }
         } while (!correctDob);
@@ -105,7 +111,7 @@ public class EmployeeController {
         do {
             System.out.println("Enter Experience: ");
             experience = scanner.nextInt();
-        } while (!validation.experienceValidator(experience));
+        } while (validation.experienceValidator(experience));
         scanner.nextLine();
  
         String place;
@@ -122,15 +128,16 @@ public class EmployeeController {
         Laptop laptop = new Laptop(laptopName);
         Department department = assignDepartment();
 
-        /**
-         *All the deatils will be added to the database and will return the id 
-         *generated in the database for assigning the course for the emoployee
+        /*
+         All the details will be added to the database and will return the id
+         generated in the database for assigning the course for the employee
          */
         int employeeId = employeeService.addEmployee(name, dob, 
                          experience, place,laptop, department);
         boolean addCourse = true;
         while (addCourse) {
             int courseId = assignCourse();
+            courseService.getCourseById(courseId);
             employeeService.assignCourseToEmployee(employeeId, courseId);
             System.out.println("Do you want to add more courses? 1-Yes \t 0-No");
             if (scanner.nextInt() == 0) {
@@ -202,7 +209,7 @@ public class EmployeeController {
                                 dob = scanner.nextLine();
                                 correctDob = validation.dobValidator(dob);
                             } catch (DateTimeParseException e) {
-                                logger.error(e.getMessage() + " Please enter a valid date of birth");
+                                logger.error("Please enter a valid date of birth{}", e.getMessage() );
                                 correctDob = false;
                             }
                         } while (!correctDob);
@@ -214,7 +221,7 @@ public class EmployeeController {
                         do {
                             System.out.println("Enter Experience: ");
                             updatedExperience = scanner.nextInt();
-                        } while (!validation.experienceValidator(updatedExperience));
+                        } while (validation.experienceValidator(updatedExperience));
                         employee.setExperience(updatedExperience);
                         break;
 
@@ -280,9 +287,9 @@ public class EmployeeController {
     public Department assignDepartment() throws EmployeeException {
         displayDepartments();
         System.out.println("Enter your Choice: ");
-        int departmentChoice = scanner.nextInt();
+        int departmentId = scanner.nextInt();
         scanner.nextLine();
-        return employeeService.getDepartmentById(departmentChoice);
+        return departmentService.getDepartmentById(departmentId);
     }
 
     /**
@@ -294,7 +301,7 @@ public class EmployeeController {
         displayCourses();
         System.out.println("Enter your Choice: ");
         int courseChoice = scanner.nextInt();
-        return employeeService.getCourseById(courseChoice).getCourseId();
+        return courseService.getCourseById(courseChoice).getCourseId();
     }
 
     /**
@@ -302,32 +309,38 @@ public class EmployeeController {
      * According to the id given by the user.
      */
     public void displayOneEmployee() throws EmployeeException {
-        System.out.println("Enter the id of the employee to be displayed");
-        int employeeId = scanner.nextInt();
-        Employee employee = employeeService.getEmployeeById(employeeId);
-        System.out.println("--------------------------------------"
-                           + "------------------------------------"
-                           + "----------------------------------"
-                            + "-------------------------------");
-        String employeeFormat = "| %-10s | %-15s | %-15s | %-15s | %-15s | "
-                                + "%-15s | %-15s |%-15s |\n";
-        System.out.format(employeeFormat, "ID", "Name", "Age", "Experience", 
-                          "Place", "Laptop", "Department","Course");
-        StringBuilder courseList = new StringBuilder();
-                for(Course course : employee.getCourses()){
-                    courseList.append(course.getCourseName()).append(", ");
-                }
-        String course = courseList.toString();                   
-        System.out.format(employeeFormat, employee.getId(),
-                            employee.getName(), employee.getAge(),
-                            employee.getExperience(), employee.getPlace(),
-                            employee.getLaptop().getLaptopName(),
-                            employee.getDepartment().getDepartmentName(),
-                            course); 
-        System.out.println("--------------------------------------"
-                           + "------------------------------------"
-                           + "---------------------------------"
-                            + "--------------------------------");
+        try {
+            System.out.println("Enter the id of the employee to be displayed");
+            int employeeId = scanner.nextInt();
+            Employee employee = employeeService.getEmployeeById(employeeId);
+            System.out.println("--------------------------------------"
+                    + "------------------------------------"
+                    + "----------------------------------"
+                    + "-------------------------------");
+            String employeeFormat = "| %-10s | %-15s | %-15s | %-15s | %-15s | "
+                    + "%-15s | %-15s |%-15s |\n";
+            System.out.format(employeeFormat, "ID", "Name", "Age", "Experience",
+                    "Place", "Laptop", "Department", "Course");
+            StringBuilder courseList = new StringBuilder();
+            for (Course course : employee.getCourses()) {
+                courseList.append(course.getCourseName()).append(", ");
+            }
+            String course = courseList.toString();
+            System.out.format(employeeFormat, employee.getId(),
+                    employee.getName(), employee.getAge(),
+                    employee.getExperience(), employee.getPlace(),
+                    employee.getLaptop().getLaptopName(),
+                    employee.getDepartment().getDepartmentName(),
+                    course);
+            System.out.println("--------------------------------------"
+                    + "------------------------------------"
+                    + "---------------------------------"
+                    + "--------------------------------");
+        } catch ( Exception e) {
+            logger.info("Enter the correct output");
+            scanner.next();
+            displayOneEmployee();
+        }
         
     }
 
@@ -373,7 +386,7 @@ public class EmployeeController {
      * This Method is to display available department for the employee to choose.
      */
     public void displayDepartments() throws EmployeeException {
-        Map<Integer, Department> departments = employeeService.getAllDepartments();
+        Map<Integer, Department> departments = departmentService.getAllDepartments();
         if (departments.isEmpty()) {
             logger.info("No Departments to Display");
         } else {
@@ -393,7 +406,8 @@ public class EmployeeController {
      * This Method is to display available course for the employee to choose.
      */
     public void displayCourses() throws EmployeeException {
-        Map<Integer, Course> courses = employeeService.getAllCourses();
+        CourseService courseService = new CourseServiceImpl();
+        Map<Integer, Course> courses = courseService.getAllCourses();
         if (courses.isEmpty()) {
             logger.info("No Courses to Display");
         } else {

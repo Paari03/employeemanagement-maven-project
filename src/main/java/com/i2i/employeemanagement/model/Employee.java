@@ -71,7 +71,11 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String dob, int experience, String place, Laptop laptop,Department department) {
+    public boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Employee(String name, String dob, int experience, String place, Laptop laptop, Department department) {
         this.name = name;
         this.dob = dob;
         this.experience = experience;
@@ -119,10 +123,6 @@ public class Employee {
 
     public void setPlace(String place) {
         this.place = place;
-    }
-
-    public boolean getIsDeleted() {
-        return isDeleted;
     }
 
     public Laptop getLaptop() {

@@ -2,16 +2,11 @@ package com.i2i.employeemanagement.employee.service;
 
 import java.util.Map;
 
-import com.i2i.employeemanagement.course.service.CourseService;
-import com.i2i.employeemanagement.course.service.CourseServiceImpl;
-import com.i2i.employeemanagement.department.service.DepartmentService;
-import com.i2i.employeemanagement.department.service.DepartmentServiceImpl;
 import com.i2i.employeemanagement.exception.EmployeeException;
 import com.i2i.employeemanagement.employee.dao.EmployeeDaoImpl;
 import com.i2i.employeemanagement.employee.dao.EmployeeDao;
 import com.i2i.employeemanagement.laptop.service.LaptopService;
 import com.i2i.employeemanagement.laptop.service.LaptopServiceImpl;
-import com.i2i.employeemanagement.model.Course;
 import com.i2i.employeemanagement.model.Department;
 import com.i2i.employeemanagement.model.Employee;
 import com.i2i.employeemanagement.model.Laptop;
@@ -22,10 +17,8 @@ import com.i2i.employeemanagement.model.Laptop;
  * @author Paari
  */
 public class EmployeeServiceImpl implements EmployeeService {
-    private EmployeeDao employeeDao = new EmployeeDaoImpl();
-    private DepartmentService departmentService = new DepartmentServiceImpl();
-    private CourseService courseService = new CourseServiceImpl();
-    private LaptopService laptopService = new LaptopServiceImpl();
+    private final EmployeeDao employeeDao = new EmployeeDaoImpl();
+    private final LaptopService laptopService = new LaptopServiceImpl();
 
     @Override
     public int addEmployee(String name, String dob, int experience, String place, Laptop laptop, Department department) throws EmployeeException {
@@ -55,26 +48,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeById(int id) throws EmployeeException {
         return employeeDao.getEmployeeById(id);
-    }
-
-    @Override
-    public Map<Integer, Department> getAllDepartments() throws EmployeeException {
-        return departmentService.getAllDepartments();
-    }
-
-    @Override
-    public Map<Integer, Course> getAllCourses() throws EmployeeException {
-        return courseService.getAllCourses();
-    }
-
-    @Override
-    public Department getDepartmentById(int departmentChoice) throws EmployeeException {
-        return getAllDepartments().get(departmentChoice);
-    }
-
-    @Override
-    public Course getCourseById(int courseChoice) throws EmployeeException {
-        return getAllCourses().get(courseChoice);
     }
 
     @Override

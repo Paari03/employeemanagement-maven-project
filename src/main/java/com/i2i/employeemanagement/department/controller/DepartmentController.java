@@ -18,10 +18,10 @@ import com.i2i.employeemanagement.util.EmployeeValidator;
  * @author paari
  */
 public class DepartmentController {
-    private DepartmentService departmentService = new DepartmentServiceImpl();
-    private EmployeeValidator validation = new EmployeeValidator();
-    private static Logger logger = LogManager.getLogger();
-    private Scanner scanner = new Scanner(System.in);
+    private final DepartmentService departmentService = new DepartmentServiceImpl();
+    private final EmployeeValidator validation = new EmployeeValidator();
+    private final Logger logger = LogManager.getLogger();
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Display the operation in the department.
@@ -159,21 +159,20 @@ public class DepartmentController {
         System.out.println("Enter the Department ID you want to view:");
         int departmentId = scanner.nextInt();
         scanner.nextLine();
-        
+
         Map<Integer, Employee> employees = departmentService.getEmployeeByDepartment(departmentId);
-        
+
         String format = "| %-15s | %-20s | %-15s | %-15s|\n";
         System.out.format(format, "Employee ID", "Employee Name",
-                              "Place","Department");
-            
+                "Place","Department");
+
         if (!employees.isEmpty()) {
             for (Employee employee : employees.values()) {
-                System.out.format(format, employee.getId(),employee.getName(), 
-                                     employee.getPlace(),departmentService.getDepartmentById(departmentId).getDepartmentName());
+                System.out.format(format, employee.getId(),employee.getName(),
+                        employee.getPlace(),departmentService.getDepartmentById(departmentId).getDepartmentName());
             }
         } else {
-                logger.info("No employees found in this department.");
+            logger.info("No employees found in this department.");
         }
     }
-
 }

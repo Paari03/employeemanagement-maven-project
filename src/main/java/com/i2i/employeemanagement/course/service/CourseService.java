@@ -8,7 +8,7 @@ import com.i2i.employeemanagement.model.Employee;
 
 
 /**
- * This class provides methods to interact with the Storag class. 
+ * This class provides methods to interact with the Storage class.
  * @author paari
  */
 public interface CourseService {
@@ -32,20 +32,18 @@ public interface CourseService {
     /**
      * Retrieves a course by its ID.
      *
-     * @param id
+     * @param courseId
      *     The ID of the course to be retrieved.
      * @return Course
-     *     Course with the particular ID.
+     *     It contains course object of the particular ID.
      */
     Course getCourseById(int courseId) throws EmployeeException;
 
     /**
      * Updates the details of an existing course.
      *
-     * @param id 
-     *     The ID of the course to be updated.
-     * @param course 
-     *     The updated Course with new details.
+     * @param course
+     *     It Contains the course object to be updated.
      */
     void updateCourse(Course course) throws EmployeeException;
 
@@ -58,14 +56,14 @@ public interface CourseService {
      *     True if the course was removed else false.
      */
     boolean deleteCourse(int id) throws EmployeeException;
-    
+
     /**
      * Retrieves a course based on the user's choice.
      *
-     * @param courseChoice
+     * @param courseId
      *     The ID of the course to be retrieved.
-     * @return Course
-     *     Course with the particulaer ID.
+     * @return Employee
+     *     Course with the particular ID.
      */
-    Map<Integer, Employee> getEmployeesByCourse(int couseId) throws EmployeeException;
+    Map<Integer, Employee> getEmployeesByCourse(int courseId) throws EmployeeException;
 }

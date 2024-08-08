@@ -1,11 +1,10 @@
 package com.i2i.employeemanagement.employee.dao;
 
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 import com.i2i.employeemanagement.exception.EmployeeException;
-import com.i2i.employeemanagement.model.Course;
 import com.i2i.employeemanagement.model.Department;
 import com.i2i.employeemanagement.model.Employee;
 import com.i2i.employeemanagement.model.Laptop;
@@ -35,7 +34,7 @@ public interface EmployeeDao {
     Map<Integer, Employee> getAllEmployees() throws EmployeeException;
 
     /**
-     * Retrieve a employee from the database.
+     * Retrieve an employee from the database.
      *
      * @return Employee
      *     A employee containing employee details.
@@ -45,7 +44,7 @@ public interface EmployeeDao {
     /**
      * Deletes an employee from the database based on the given ID.
      *
-     * @param id The ID of the employee to delete.
+     * @param deleteId The ID of the employee to delete.
      * @return boolean True if the employee was successfully deleted, else false.
      */
     boolean deleteEmployee(int deleteId) throws EmployeeException;

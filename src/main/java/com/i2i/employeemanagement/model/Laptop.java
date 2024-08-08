@@ -51,7 +51,6 @@ public class Laptop {
 
     public Laptop(String laptopName) {
         this.laptopName = laptopName;
-        this.employees = employees;
     }
 
 }

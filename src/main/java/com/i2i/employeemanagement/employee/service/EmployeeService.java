@@ -2,7 +2,6 @@ package com.i2i.employeemanagement.employee.service;
 
 import java.util.Map;
 
-import com.i2i.employeemanagement.model.Course;
 import com.i2i.employeemanagement.model.Department;
 import com.i2i.employeemanagement.model.Employee;
 import com.i2i.employeemanagement.exception.EmployeeException;
@@ -20,7 +19,7 @@ public interface EmployeeService {
      * @param dob        The dob of the employee to be added.
      * @param experience The experience of the employee to be added.
      * @param place      The place of the employee to be added.
-     * @param laptop
+     * @param laptop     The laptop of the employee to be added.
      * @param department The department of the employee to be added.
      * @return int
      * The generated ID of the newly added employee.
@@ -41,7 +40,7 @@ public interface EmployeeService {
     /**
      * Deletes an employee from the storage based on the given id.
      *
-     * @param id
+     * @param deleteId
      *     The id of the employee to delete.
      *
      * @return boolean
@@ -52,7 +51,7 @@ public interface EmployeeService {
     /**
      * Updates the details of an employee in the storage.
      *
-     * @param id
+     * @param updateId
      *     The id of the employee to update.
      * @param employee
      *     The updated employee object with new details.
@@ -77,44 +76,6 @@ public interface EmployeeService {
      *     The employee object to the given id.
      */
     Employee getEmployeeById(int id) throws EmployeeException;
-
-    /**
-     * Retrieves all departments available in the storage.
-     *
-     * @return Map<Integer, Department>
-     *     A map containing all departments keyed by their ids.
-     */
-    Map<Integer, Department> getAllDepartments() throws EmployeeException;
-
-    /**
-     * Retrieves all courses available in the storage.
-     *
-     * @return Map<Integer, Course>
-     *     A map containing all courses by their ids.
-     */
-    Map<Integer, Course> getAllCourses() throws EmployeeException;
-
-    /**
-     * Assigns a department based on user choice.
-     *
-     * @param departmentChoice
-     *     The choice of department chosen by the user.
-     *
-     * @return Department
-     *     The department object to the user's choice.
-     */
-    Department getDepartmentById(int departmentChoice) throws EmployeeException;
-
-    /**
-     * Assigns a course based on user choice.
-     *
-     * @param courseChoice
-     *     The choice of course chosen by the user.
-     *
-     * @return Course
-     *     The course object to the user's choice.
-     */
-    Course getCourseById(int courseChoice) throws EmployeeException;
 
     /**
      * Assigns a course to an employee.

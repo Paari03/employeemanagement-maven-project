@@ -9,11 +9,11 @@ import com.i2i.employeemanagement.model.Department;
 import com.i2i.employeemanagement.model.Employee;
 
 /**
- * This class provides methods to interact with the Storag class. 
+ * This class provides methods to interact with the Storage class.
  * @author paari
  */
 public class DepartmentServiceImpl implements DepartmentService {
-    private DepartmentDao departmentDao = new DepartmentDaoImpl();
+    private final DepartmentDao departmentDao = new DepartmentDaoImpl();
 
     @Override
     public void createDepartment(String departmentName) throws EmployeeException {

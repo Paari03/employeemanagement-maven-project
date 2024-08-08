@@ -16,10 +16,8 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public void addCourse(String courseName) throws EmployeeException {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Course course = new Course(courseName);
             session.save(course);
@@ -29,19 +27,13 @@ public class CourseDaoImpl implements CourseDao {
                 transaction.rollback();
             }
             throw new EmployeeException("Error in adding the Course: " + courseName, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
     public void updateCourse(Course course) throws EmployeeException {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.update(course);
             transaction.commit();
@@ -50,19 +42,13 @@ public class CourseDaoImpl implements CourseDao {
                 transaction.rollback();
             }
             throw new EmployeeException("Error updating the course " + course.getCourseName(), e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
     public boolean deleteCourse(int courseId) throws EmployeeException {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Course course = session.get(Course.class, courseId);
             if (course != null) {
@@ -77,10 +63,6 @@ public class CourseDaoImpl implements CourseDao {
                 transaction.rollback();
             }
             throw new EmployeeException("Error in deleting the Course with Id " + courseId, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
@@ -95,7 +77,7 @@ public class CourseDaoImpl implements CourseDao {
                 courseDetails.put(course.getCourseId(), course);
             }
         } catch (Exception e) {
-            throw new EmployeeException("Error in retrieving all Courses. Cause: " + e.getMessage(), e);
+            throw new EmployeeException("Error in retrieving all Courses. Cause: ", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -106,40 +88,27 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public Course getCourseById(int courseId) throws EmployeeException {
-        Session session = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
-            Course course = session.get(Course.class, courseId);
-            return course;
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
+            return session.get(Course.class, courseId);
         } catch (Exception e) {
             throw new EmployeeException("Error in retrieving all Courses. Cause: " + e.getMessage(), e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
-
     @Override
     public Map<Integer, Employee> getEmployeesByCourse(int courseId) throws EmployeeException {
-        Session session = null;
         Map<Integer, Employee> employees = new HashMap<>();
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             Course course = session.get(Course.class, courseId);
             if (course.getEmployees() != null) {
                 for (Employee employee : course.getEmployees()) {
-                    employees.put(employee.getId(), employee);
+                    if (!employee.getIsDeleted()) {
+                        employees.put(employee.getId(), employee);
+                    }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new EmployeeException("Error in retrieving Employees by Course Id" + courseId , e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return employees;
     }

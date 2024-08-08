@@ -11,17 +11,15 @@ import com.i2i.employeemanagement.exception.EmployeeException;
 import com.i2i.employeemanagement.model.Employee;
 import com.i2i.employeemanagement.laptop.service.LaptopService;
 import com.i2i.employeemanagement.laptop.service.LaptopServiceImpl;
-import com.i2i.employeemanagement.util.EmployeeValidator;
 
 /**
  * This class  manage all the input and output function with CRUD operations.
  * @author paari
  */
 public class LaptopController {
-    private LaptopService laptopService = new LaptopServiceImpl();
-    private EmployeeValidator validation = new EmployeeValidator();
-    private static Logger logger = LogManager.getLogger();
-    private Scanner scanner = new Scanner(System.in);
+    private final LaptopService laptopService = new LaptopServiceImpl();
+    private static final Logger logger = LogManager.getLogger();
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Display the operation in the Laptop.

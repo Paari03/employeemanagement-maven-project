@@ -1,6 +1,6 @@
 package com.i2i.employeemanagement.course.dao;
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 import com.i2i.employeemanagement.exception.EmployeeException;
@@ -17,15 +17,13 @@ public interface CourseDao {
     /**
      * Add the course to the database
      *
-     * @param course The name of the course. 
+     * @param courseName The name of the course.
      */
     void addCourse(String courseName) throws EmployeeException;
 
     /**
      * Update the course name  in the database
      *
-     * @param courseId
-     *     The Id of th eCourse to be changed.
      * @param course
      *     The Updated name of the course. 
      */
@@ -35,7 +33,7 @@ public interface CourseDao {
      * Delete the course in the database
      *
      * @param courseId 
-     *    The Id of the course to be deleted. 
+     *    The ID of the course to be deleted.
      */
     boolean deleteCourse(int courseId) throws EmployeeException; 
 
@@ -43,14 +41,14 @@ public interface CourseDao {
      * Retrieve all the course in the database
      *
      * @return Map<Integer, Course>
-     *     The course Id as the key and the Course object as the value 
+     *     The course ID as the key and the Course object as the value
      */
     Map<Integer, Course> getAllCourses() throws EmployeeException; 
     
     /**
      * Retrieve the single course from the course.
      * @return Course
-     *     It contains the course Id and Name.
+     *     It contains the course ID and Name.
      */
     Course getCourseById(int courseId) throws EmployeeException;
 

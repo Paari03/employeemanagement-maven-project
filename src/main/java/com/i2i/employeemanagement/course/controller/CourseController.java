@@ -19,10 +19,10 @@ import com.i2i.employeemanagement.util.EmployeeValidator;
  * @author Paari
  */
 public class CourseController {
-    private CourseService courseService = new CourseServiceImpl();
-    private EmployeeValidator validation = new EmployeeValidator();
-    private static Logger logger = LogManager.getLogger();
-    private Scanner scanner = new Scanner(System.in);
+    private final CourseService courseService = new CourseServiceImpl();
+    private final EmployeeValidator validation = new EmployeeValidator();
+    private static final Logger logger = LogManager.getLogger();
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Display the functions in the course.

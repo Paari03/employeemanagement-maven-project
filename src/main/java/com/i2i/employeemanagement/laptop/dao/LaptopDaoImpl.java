@@ -36,27 +36,18 @@ public class LaptopDaoImpl implements LaptopDao {
 
     @Override
     public Laptop getLaptopById(int laptopId) throws EmployeeException {
-        Session session = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
-            Laptop laptop1 = session.get(Laptop.class, laptopId);
-            return laptop1;
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
+            return session.get(Laptop.class, laptopId);
         } catch (Exception e) {
             throw new EmployeeException("Error retrieving a laptops:", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
 
     @Override
     public void updateLaptop(int laptopId, Laptop laptop) throws EmployeeException {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.update(laptop);
             transaction.commit();
@@ -65,20 +56,14 @@ public class LaptopDaoImpl implements LaptopDao {
                 transaction.rollback();
             }
             throw new EmployeeException("Error updating the laptopId: " + laptopId, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
 
     @Override
     public Map<Integer, Employee> getEmployeeByLaptop(int laptopId) throws EmployeeException {
-        Session session = null;
         Map<Integer, Employee> employeeDetails = new HashMap<>();
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             Laptop laptop = session.get(Laptop.class, laptopId);
             if (laptop != null && laptop.getEmployees() != null) {
                  Employee employee = laptop.getEmployees();
@@ -86,10 +71,6 @@ public class LaptopDaoImpl implements LaptopDao {
             }
         } catch (Exception e) {
             throw new EmployeeException("Error in retrieving employees by laptop " + laptopId, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return employeeDetails;
     }

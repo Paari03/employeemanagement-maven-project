@@ -7,7 +7,7 @@ import com.i2i.employeemanagement.model.Laptop;
 import com.i2i.employeemanagement.model.Employee;
 
 /**
- * This class provides methods to interact with the Storag class.
+ * This class provides methods to interact with the Storage class.
  * @author paari
  */
 public interface LaptopService {
@@ -23,7 +23,7 @@ public interface LaptopService {
     Map<Integer, Laptop> getAllLaptops() throws EmployeeException;
 
     /**
-     * Updates the details of an Laptop.
+     * Updates the details of a Laptop.
      *
      * @param laptopId
      *     The ID of the Laptop to be updated.
@@ -46,7 +46,7 @@ public interface LaptopService {
 
 
     /**
-     * Retrieves a employee by Laptop based on user choice.
+     * Retrieves an employee by Laptop based on user choice.
      *
      * @param laptopId
      *     The ID of the laptop chosen by the user.

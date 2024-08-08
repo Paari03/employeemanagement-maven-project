@@ -1,6 +1,5 @@
 package com.i2i.employeemanagement.laptop.dao;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.i2i.employeemanagement.exception.EmployeeException;
@@ -26,12 +25,12 @@ public interface LaptopDao {
     /**
      * This Method will get all the Laptop in the database;
      * @return Map<Integer, Laptop>
-     *     id as a integer and both id and name as laptop
+     *     id as an integer and both id and name as laptop
      */
     Map<Integer, Laptop> getAllLaptops() throws EmployeeException;
 
     /**
-     * This Method will get the Laptop by Id.
+     * This Method will get the Laptop by ID.
      * @return Laptop
      *     It contains the id and name of the laptop.
      */
@@ -40,7 +39,7 @@ public interface LaptopDao {
     /**
      * This Method will get employee by Laptop in the database;
      * @return Map<Integer, Employee>
-     *     id as a integer and the employee contails all the detaails
+     *     id as an integer and the employee contains all the details
      */
     Map<Integer, Employee> getEmployeeByLaptop(int laptopId)throws EmployeeException;
 }

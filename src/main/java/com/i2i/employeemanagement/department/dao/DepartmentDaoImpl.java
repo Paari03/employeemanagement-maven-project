@@ -16,10 +16,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public void addDepartment(String departmentName) throws EmployeeException {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Department department = new Department(departmentName);
             session.save(department);
@@ -29,10 +27,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 transaction.rollback();
             }
             throw new EmployeeException("Error in adding the Department Name: " + departmentName, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
@@ -58,26 +52,17 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public Department getDepartmentById(int departmentId) throws EmployeeException{
-        Session session = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
-            Department department = session.get(Department.class, departmentId);
-            return department;
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
+            return session.get(Department.class, departmentId);
         } catch (Exception e) {
             throw new EmployeeException("Error retrieving all departments:", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
     public void updateDepartment(int departmentId, Department department) throws EmployeeException {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.update(department);
             transaction.commit();
@@ -86,58 +71,43 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 transaction.rollback();
             }
             throw new EmployeeException("Error updating the departmentId: " + departmentId, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
     public boolean deleteDepartment(int departmentId) throws EmployeeException {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Department department = session.get(Department.class, departmentId);
             if (department != null) {
                 department.setIsDeleted(true);
                 session.update(department);
                 transaction.commit();
-                return true;
             }
-            return false;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             throw new EmployeeException("Error deleting DepartmentId:" + departmentId, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
+        return true;
     }
 
     @Override
     public Map<Integer, Employee> getEmployeeByDepartment(int departmentId) throws EmployeeException {
-        Session session = null;
         Map<Integer, Employee> employeeDetails = new HashMap<>();
-        try {
-            session = SessionProvider.getSessionFactory().openSession();
+        try (Session session = SessionProvider.getSessionFactory().openSession()) {
             Department department = session.get(Department.class, departmentId);
             if (department != null && department.getEmployees() != null) {
                 for (Employee employee : department.getEmployees()) {
-                    employeeDetails.put(employee.getId(), employee);
+                    if(!employee.getIsDeleted()) {
+                        employeeDetails.put(employee.getId(), employee);
+                    }
                 }
             }
         } catch (Exception e) {
             throw new EmployeeException("Error in retrieving employees by department " + departmentId, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return employeeDetails;
     }

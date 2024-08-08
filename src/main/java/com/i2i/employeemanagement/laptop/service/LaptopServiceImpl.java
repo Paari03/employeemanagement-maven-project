@@ -9,11 +9,11 @@ import com.i2i.employeemanagement.model.Laptop;
 import com.i2i.employeemanagement.model.Employee;
 
 /**
- * This class provides methods to interact with the Storag class.
+ * This class provides methods to interact with the Storage class.
  * @author paari
  */
 public class LaptopServiceImpl implements LaptopService {
-    private LaptopDao laptopDao = new LaptopDaoImpl();
+    private final LaptopDao laptopDao = new LaptopDaoImpl();
 
 
     @Override

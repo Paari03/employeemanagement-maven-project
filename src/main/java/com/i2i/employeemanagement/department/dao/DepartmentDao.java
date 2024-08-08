@@ -1,6 +1,6 @@
 package com.i2i.employeemanagement.department.dao;
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 import com.i2i.employeemanagement.exception.EmployeeException;
@@ -19,17 +19,17 @@ public interface DepartmentDao {
      * @param departmentName
      *     It is the name of the department to be added.
      */
-    void addDepartment(String departmentName) throws EmployeeException;  
-   
+    void addDepartment(String departmentName) throws EmployeeException;
+
     /**
      * This Method will update the Department to the database;
-     * @param id
+     * @param departmentId
      *     It is the department id.
      * @param department
      *     It contains both the id and name of the department.
      */
-    void updateDepartment(int departmentId, Department department) throws EmployeeException; 
-    
+    void updateDepartment(int departmentId, Department department) throws EmployeeException;
+
     /**
      * This Method will delete the Department to the database;
      * @return boolean
@@ -40,12 +40,12 @@ public interface DepartmentDao {
     /**
      * This Method will get all the Department in the database;
      * @return Map<Integer, Department>
-     *     id as a integer and both id and name as department
+     *     id as an integer and both id and name as department
      */
-    Map<Integer, Department> getAllDepartments() throws EmployeeException; 
+    Map<Integer, Department> getAllDepartments() throws EmployeeException;
 
     /**
-     * This Method will get the Department by Id.
+     * This Method will get the Department by ID.
      * @return Department
      *     It contains the id and name of the department.
      */
@@ -54,7 +54,7 @@ public interface DepartmentDao {
     /**
      * This Method will get employee by Department in the database;
      * @return Map<Integer, Employee>
-     *     id as a integer and the employee contails all the detaails
+     *     id as an integer and the employee contains all the details
      */
-    Map<Integer, Employee> getEmployeeByDepartment(int departmentId)throws EmployeeException; 
+    Map<Integer, Employee> getEmployeeByDepartment(int departmentId)throws EmployeeException;
 }

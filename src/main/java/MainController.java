@@ -11,11 +11,11 @@ import com.i2i.employeemanagement.laptop.controller.LaptopController;
  * @author Paari
  */
 public class MainController {
-    private EmployeeController employeeController = new EmployeeController();
-    private DepartmentController departmentController = new DepartmentController();
-    private CourseController courseController = new CourseController();
-    private Scanner scanner = new Scanner(System.in);
-    private LaptopController laptopController = new LaptopController();
+    private final EmployeeController employeeController = new EmployeeController();
+    private final DepartmentController departmentController = new DepartmentController();
+    private final CourseController courseController = new CourseController();
+    private final Scanner scanner = new Scanner(System.in);
+    private final LaptopController laptopController = new LaptopController();
 
     public void mainFunction() {
         boolean isLoop = true;

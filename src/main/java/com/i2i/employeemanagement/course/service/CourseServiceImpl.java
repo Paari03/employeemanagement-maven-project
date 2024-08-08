@@ -10,12 +10,12 @@ import com.i2i.employeemanagement.model.Employee;
 
 
 /**
- * This class provides methods to interact with the Storag class.
+ * This class provides methods to interact with the Storage class.
  * @author paari
  */
 public class CourseServiceImpl implements CourseService {
 
-    private CourseDao courseDao = new CourseDaoImpl();
+    private final CourseDao courseDao = new CourseDaoImpl();
 
     @Override
     public void createCourse(String courseName) throws EmployeeException {
@@ -42,10 +42,6 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.deleteCourse(courseId);
     }
 
-    public Course assignCourse(int courseChoice) throws EmployeeException {
-        return courseDao.getAllCourses().get(courseChoice);
-    }
-    
     @Override
     public Map<Integer, Employee> getEmployeesByCourse(int courseId) throws EmployeeException {
        return courseDao.getEmployeesByCourse(courseId);

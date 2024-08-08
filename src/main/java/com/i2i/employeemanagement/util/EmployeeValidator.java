@@ -1,8 +1,7 @@
 package com.i2i.employeemanagement.util;
 
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.LocalDate; 
+import java.time.LocalDate;
 
 /**
  * This class  is the validation class which will validate the fields given. 
@@ -33,7 +32,7 @@ public class EmployeeValidator{
     public boolean dobValidator(String dob) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthDate = LocalDate.parse(dob,formatter);
-        return true;        
+        return true;
     }
 
     /**
@@ -41,10 +40,7 @@ public class EmployeeValidator{
      * @return boolean
      */
     public boolean experienceValidator(int experience) {
-        if (experience < 50 && experience >= 0) {
-            return true; 
-        }
-        return false;
+        return experience >= 50 || experience < 0;
     }
 } 
 

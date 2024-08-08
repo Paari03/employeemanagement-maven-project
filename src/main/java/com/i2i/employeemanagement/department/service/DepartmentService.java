@@ -7,7 +7,7 @@ import com.i2i.employeemanagement.model.Department;
 import com.i2i.employeemanagement.model.Employee;
 
 /**
- * This class provides methods to interact with the Storag class. 
+ * This class provides methods to interact with the Storage class.
  * @author paari
  */
 public interface DepartmentService {
@@ -29,9 +29,9 @@ public interface DepartmentService {
     Map<Integer, Department> getAllDepartments() throws EmployeeException;
 
     /**
-     * Updates the details of an department.
+     * Updates the details of a department.
      *
-     * @param id 
+     * @param departmentId
      *     The ID of the department to be updated.
      * @param department
      *     The Department object containing updated details.
@@ -41,7 +41,7 @@ public interface DepartmentService {
     /**
      * Deletes a department by ID.
      *
-     * @param id 
+     * @param departmentId
      *     The ID of the department to be deleted.
      * @return boolean
      *     true if the department was marked as removed,else false.
@@ -51,7 +51,7 @@ public interface DepartmentService {
     /**
      * Retrieves a department by ID.
      *
-     * @param id 
+     * @param departmentId
      *     The ID of the department to retrieve.
      * @return Department 
      *     The object with the Department ID and Name.
@@ -67,7 +67,7 @@ public interface DepartmentService {
     boolean checkDepartment() throws EmployeeException;
 
     /**
-     * Retrieves a employee by department based on user choice.
+     * Retrieves an employee by department based on user choice.
      *
      * @param departmentId
      *     The ID of the department chosen by the user.
